@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <title>Todo Least</title>
+    
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services/auth.js"></script>
+    <script src="js/controllers/todoCtrl.js"></script>
+
+  </head>
+
+  <body ng-app="todo">
+
+    <section id="todoapp" ng-controller="TodoCtrl">
+
+        <header id="header">
+
+            <h1>
+                Todo Least<br>
+                <span class="subtitle">A todo list but not the least</span>
+            </h1>
+
+            <div ng-hide="!logedin">
+                <button ng-click="logout()">Logout</button>
+            </div>
+
+            <div ng-hide="logedin">
+                <form action="#" ng-submit="login(user)">
+                    <input type="email" ng-model="user.email" placeholder="email">
+                    <input type="password" ng-model="user.password" placeholder="password">
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+
+        </header>
+
+        <section id="main">
+
+            <form action="#" id="todo-form">
+                <span class="input input--nao">
+                    <input type="text" class="input__field input__field--nao" id="new-todo" ng-model="text" ng-keydown="addTodo($event)" autocomplete="off">
+                    <label class="input__label input__label--nao" for="new-todo">
+                        <span class="input__label-content input__label-content--nao">What do you have to do ?</span>
+                    </label>
+                    <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>
+                    </svg>
+                </span>
+            </form>
+
+            <ul id="todo-list">
+                <li ng-repeat="todo in todos | orderBy: 'completed'" ng-class="{completed: todo.completed, editing: todo.editing}" ng-dblclick="todo.editing = true">
+                    <div class="view">
+                        <input type="checkbox" class="toggle" ng-model="todo.completed">
+                        <label>{{todo.text}}</label>
+                        <button class="destroy" ng-click="removeTodo($index)"></button>
+                    </div>
+                    <form action="#">
+                        <input class="edit" ng-model="todo.text" ng-blur="editTodo(todo)">
+                    </form>
+                </li>
+            </ul>
+
+        </section>
+
+        <footer id="footer">
+            <span id="todo-count"><strong>{{remaining}}</strong> tasks left</span>
+        </footer>
+        
+    </section>
+
+  </body>
+
+</html>
