@@ -1,7 +1,7 @@
 'use strict';
 
 todo.factory('Auth', function ($firebaseAuth, $rootScope) {
-  var ref = new Firebase('https://popping-heat-7040.firebaseio.com/');
+  var ref = new Firebase('https://your-firebase.firebaseio.com/');
   var auth = $firebaseAuth(ref);
 
   var Auth = {
