@@ -6,7 +6,7 @@
  * - exposes the model to the template and provides event handlers
  */
 todo.controller('TodoCtrl', function($scope, $firebaseArray, Auth, filterFilter) {
-    var url = 'https://popping-heat-7040.firebaseio.com/';
+    var url = 'https://your-firebase.firebaseio.com/';
     var fireRef = new Firebase(url);
 
     $scope.logedin = Auth.signedIn();
