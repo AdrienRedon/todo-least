@@ -5,13 +5,15 @@
  * - retrieves and persists the model via the $firebase service
  * - exposes the model to the template and provides event handlers
  */
-todo.controller('TodoCtrl', function($scope, $firebaseArray, Auth, filterFilter) {
-    var url = 'https://popping-heat-7040.firebaseio.com/';
-    var fireRef = new Firebase(url);
+todo.controller('TodoCtrl', function(FirebaseService, $scope, $firebaseArray, Auth, filterFilter) {
+
+    var userId;
+    var fireRef;
 
     $scope.logedin = Auth.signedIn();
 
-    $scope.todos = $scope.logedin ? $firebaseArray(fireRef) : [];
+    $scope.todos = fireRef ? $firebaseArray(fireRef) : [];
+
 
     $scope.$watch('todos', function() {
         $scope.remaining = filterFilter($scope.todos, {completed: false}).length;
@@ -19,6 +21,7 @@ todo.controller('TodoCtrl', function($scope, $firebaseArray, Auth, filterFilter)
 
     $scope.login = function () {
       Auth.login($scope.user).then(function () {
+        fireRef = new Firebase(FirebaseService.url + '/users/' + Auth.signedIn().uid + '/todos');
         $scope.todos = $firebaseArray(fireRef);
         $scope.logedin = true;
       });
@@ -47,5 +50,3 @@ todo.controller('TodoCtrl', function($scope, $firebaseArray, Auth, filterFilter)
         $scope.todos.$remove(index);
     };
 });
-
-
