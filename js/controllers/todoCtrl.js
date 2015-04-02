@@ -18,15 +18,21 @@ todo.controller('TodoCtrl', function(FirebaseService, $scope, $firebaseArray, Au
         $scope.remaining = filterFilter($scope.todos, {completed: false}).length;
     }, true);
 
-    $scope.login = function () {
-      Auth.login($scope.user).then(function () {
+    $scope.signUp = function() {
+        Auth.signUp($scope.user).then(function() {
+            $scope.login($scope.user);
+        });
+    };
+
+    $scope.login = function() {
+      Auth.login($scope.user).then(function() {
         fireRef = new Firebase(FirebaseService.url + '/users/' + Auth.signedIn().uid + '/todos');
         $scope.todos = $firebaseArray(fireRef);
         $scope.logedin = true;
       });
     };
 
-    $scope.logout = function () {
+    $scope.logout = function() {
         $scope.todos = [];
         $scope.logedin = false;
         Auth.logout();

@@ -15,6 +15,9 @@ todo.factory('Auth', function(FirebaseService, $firebaseAuth, $rootScope) {
     },
     signedIn: function() {
       return auth.$getAuth();
+    },
+    signUp: function(user) {
+      return auth.$createUser(user);
     }
   };
 
