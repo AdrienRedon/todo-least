@@ -5,16 +5,9 @@
  * - retrieves and persists the model via the $firebase service
  * - exposes the model to the template and provides event handlers
  */
-<<<<<<< HEAD
 todo.controller('TodoCtrl', function(FirebaseService, $scope, $firebaseArray, Auth, filterFilter) {
 
-    var userId;
     var fireRef;
-=======
-todo.controller('TodoCtrl', function($scope, $firebaseArray, Auth, filterFilter) {
-    var url = 'https://your-firebase.firebaseio.com/';
-    var fireRef = new Firebase(url);
->>>>>>> bf2417478530de58b7ad30e8384d4757954fb87a
 
     $scope.logedin = Auth.signedIn();
 
