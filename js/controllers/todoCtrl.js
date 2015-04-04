@@ -7,11 +7,8 @@
  */
 todo.controller('TodoCtrl', function(FirebaseService, $scope, $firebaseArray, Auth, filterFilter) {
 
-    var fireRef;
-
     $scope.logedin = Auth.signedIn();
-
-    $scope.todos = fireRef ? $firebaseArray(fireRef) : [];
+    $scope.todos = $scope.logedin ? $firebaseArray(new Firebase(FirebaseService.url + '/users/' + Auth.signedIn().uid + '/todos')) : [];
 
 
     $scope.$watch('todos', function() {
@@ -26,8 +23,7 @@ todo.controller('TodoCtrl', function(FirebaseService, $scope, $firebaseArray, Au
 
     $scope.login = function() {
       Auth.login($scope.user).then(function() {
-        fireRef = new Firebase(FirebaseService.url + '/users/' + Auth.signedIn().uid + '/todos');
-        $scope.todos = $firebaseArray(fireRef);
+        $scope.todos = $firebaseArray(new Firebase(FirebaseService.url + '/users/' + Auth.signedIn().uid + '/todos'));
         $scope.logedin = true;
       });
     };
@@ -42,8 +38,8 @@ todo.controller('TodoCtrl', function(FirebaseService, $scope, $firebaseArray, Au
     $scope.addTodo = function(e) {
         // Listen for return key
         if (e.keyCode === 13 && $scope.text) {
-          $scope.todos.$add({ text: $scope.text, completed: false });
-          $scope.text = "";
+            $scope.todos.$add({ text: $scope.text, completed: false });
+            $scope.text = "";
         }
     };
 
@@ -54,4 +50,5 @@ todo.controller('TodoCtrl', function(FirebaseService, $scope, $firebaseArray, Au
     $scope.removeTodo = function(index) {
         $scope.todos.$remove(index);
     };
+
 });
