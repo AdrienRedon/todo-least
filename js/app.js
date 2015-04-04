@@ -3,7 +3,7 @@
 'use strict';
 
 /**
- * The main Leasting app module
+ * The main Todo app module
  *
  * @type {angular.Module}
  */
